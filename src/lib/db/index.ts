@@ -1,6 +1,7 @@
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import * as schema from "./schema";
+import * as authSchema from "./auth-schema";
 
 /**
  * Cliente global de base de datos (Drizzle + node-postgres sobre Neon).
@@ -22,7 +23,7 @@ if (process.env.NODE_ENV !== "production") {
   globalForDb.pool = pool;
 }
 
-export const db = drizzle(pool, { schema });
+export const db = drizzle(pool, { schema: { ...schema, ...authSchema } });
 
 export type Database = typeof db;
 export * from "./schema";

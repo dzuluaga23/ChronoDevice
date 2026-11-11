@@ -17,27 +17,23 @@ export const auth = betterAuth({
     minPasswordLength: 8,
   },
   session: {
-    modelName: "session",
-    additionalFields: [
-      {
-        key: "activeCompanyId",
+    additionalFields: {
+      activeCompanyId: {
         type: "string",
         required: false,
+        returned: true,
         input: false, // solo se setea desde el servidor
-        defaultValue: null,
-        onServerComplete: true,
       },
-    ],
+    },
   },
   user: {
-    additionalFields: [
-      {
-        key: "fullName",
+    additionalFields: {
+      fullName: {
         type: "string",
         required: false,
-        input: true,
+        returned: true,
       },
-    ],
+    },
   },
   plugins: [nextCookies()], // último plugin siempre
 });

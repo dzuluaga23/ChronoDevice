@@ -30,14 +30,15 @@
 
 ## Sprint 2 — Backend
 
-- [ ] Better Auth: registro, login, sesión
-- [ ] Flujo multi-empresa: crear empresa / invitar usuarios / roles (admin, técnico, consulta)
-- [ ] Arquitectura por capas: `route → service → repository → Drizzle`
-- [ ] Repositories con filtro automático por `company_id`
-- [ ] Endpoints CRUD: activos, categorías, marcas, ubicaciones, proveedores, responsables
+- [x] Better Auth: registro, login, sesión
+- [x] Flujo multi-empresa: crear empresa / roles (admin, técnico, consulta) *(invitaciones por email pendientes)*
+- [x] Arquitectura por capas: `route → service → repository → Drizzle`
+- [x] Repositories con filtro automático por `company_id`
+- [x] Endpoints CRUD: activos (con código automático AST-#### y filtros)
+- [ ] Endpoints CRUD: categorías, marcas, ubicaciones, proveedores, responsables
 - [ ] Endpoints: mantenimientos, reparaciones, garantías, costos acumulados
-- [ ] Validación con Zod en todos los endpoints (esquemas compartidos con el front)
-- [ ] Manejo de errores y respuestas consistentes
+- [x] Validación con Zod en todos los endpoints (esquemas compartidos con el front)
+- [x] Manejo de errores y respuestas consistentes
 
 ## Sprint 3 — Front CRUD
 
