@@ -3,6 +3,7 @@
  */
 import { and, asc, eq } from "drizzle-orm";
 import { db } from "@/lib/db";
+import { user as userTable } from "@/lib/db/auth-schema";
 import { companies, memberships } from "@/lib/db/schema";
 
 export async function listUserCompanies(userId: string) {
@@ -79,6 +80,25 @@ export async function listCompanyMembers(companyId: string) {
       createdAt: memberships.createdAt,
     })
     .from(memberships)
+    .where(eq(memberships.companyId, companyId))
+    .orderBy(asc(memberships.createdAt));
+}
+
+/**
+ * Miembros de una empresa con datos básicos de usuario — para asignar
+ * responsables a activos (el front necesita nombre/email para mostrar).
+ */
+export async function listCompanyMembersWithUser(companyId: string) {
+  return db
+    .select({
+      userId: memberships.userId,
+      role: memberships.role,
+      name: userTable.name,
+      fullName: userTable.fullName,
+      email: userTable.email,
+    })
+    .from(memberships)
+    .innerJoin(userTable, eq(userTable.id, memberships.userId))
     .where(eq(memberships.companyId, companyId))
     .orderBy(asc(memberships.createdAt));
 }

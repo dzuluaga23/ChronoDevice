@@ -35,8 +35,8 @@
 - [x] Arquitectura por capas: `route → service → repository → Drizzle`
 - [x] Repositories con filtro automático por `company_id`
 - [x] Endpoints CRUD: activos (con código automático AST-#### y filtros)
-- [ ] Endpoints CRUD: categorías, marcas, ubicaciones, proveedores, responsables
-- [ ] Endpoints: mantenimientos, reparaciones, garantías, costos acumulados
+- [x] Endpoints CRUD: categorías, marcas, ubicaciones, proveedores, responsables
+- [x] Endpoints: mantenimientos, reparaciones, garantías, costos acumulados (historial por activo)
 - [x] Validación con Zod en todos los endpoints (esquemas compartidos con el front)
 - [x] Manejo de errores y respuestas consistentes
 
