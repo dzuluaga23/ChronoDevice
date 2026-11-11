@@ -10,9 +10,9 @@
 - [x] Crear repo en GitHub y conectarlo al directorio local
 - [x] Crear cuenta en Neon (Postgres gratis) y obtener connection string
 - [ ] Crear cuenta en Vercel (con GitHub)
-- [ ] Scaffolding de Next.js (App Router) + TypeScript + Tailwind + ESLint
-- [ ] Instalar Shadcn/ui y componentes base
-- [ ] Definir design tokens de **Chrono UI** (colores, tipografía, espaciados, estados)
+- [x] Scaffolding de Next.js (App Router) + TypeScript + Tailwind + ESLint
+- [x] Instalar Shadcn/ui y componentes base
+- [x] Definir design tokens de **Chrono UI** (colores, tipografía, espaciados, estados)
 - [ ] Primer deploy a Vercel (app "hola mundo" publicada)
 - [ ] Variables de entorno configuradas localmente y en Vercel
 

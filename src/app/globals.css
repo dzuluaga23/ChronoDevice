@@ -1,26 +1,170 @@
-@import "tailwindcss";
+/*
+ * Chrono UI — Design system de ChronoDevice
+ * Identidad: ficha técnica industrial.
+ * Neutros cálidos (stone) + acento ámbar industrial + colores de estado del ciclo de vida.
+ * Radios bajos (4–6px), datos técnicos en monoespaciada.
+ */
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-heading: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* ── Estados del ciclo de vida del activo ───────────────────── */
+  --color-status-operativo: var(--status-operativo);
+  --color-status-mantenimiento: var(--status-mantenimiento);
+  --color-status-reparacion: var(--status-reparacion);
+  --color-status-retirado: var(--status-retirado);
+  --color-status-garantia: var(--status-garantia);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  /* Neutros cálidos (stone) */
+  --background: oklch(0.985 0.001 106.423); /* stone-50 */
+  --foreground: oklch(0.216 0.006 56.043); /* stone-900 */
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.216 0.006 56.043);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.216 0.006 56.043);
+
+  /* Acento ámbar industrial, texto oscuro encima */
+  --primary: oklch(0.769 0.188 70.08); /* amber-500 */
+  --primary-foreground: oklch(0.147 0.004 49.25); /* stone-950 */
+
+  --secondary: oklch(0.923 0.003 48.717); /* stone-200 */
+  --secondary-foreground: oklch(0.216 0.006 56.043);
+  --muted: oklch(0.97 0.001 106.424); /* stone-100 */
+  --muted-foreground: oklch(0.553 0.013 58.071); /* stone-500 */
+  --accent: oklch(0.97 0.001 106.424);
+  --accent-foreground: oklch(0.216 0.006 56.043);
+  --destructive: oklch(0.577 0.245 27.325); /* red-600 */
+  --border: oklch(0.923 0.003 48.717);
+  --input: oklch(0.923 0.003 48.717);
+  --ring: oklch(0.769 0.188 70.08);
+
+  /* Gráficas: familia de estados */
+  --chart-1: oklch(0.696 0.17 162.48); /* emerald-500 */
+  --chart-2: oklch(0.795 0.184 86.047); /* yellow-500 */
+  --chart-3: oklch(0.637 0.237 25.331); /* red-500 */
+  --chart-4: oklch(0.623 0.214 259.815); /* blue-500 */
+  --chart-5: oklch(0.709 0.01 56.259); /* stone-400 */
+
+  /* Bordes radiosos bajos: estética de instrumento */
+  --radius: 0.375rem;
+
+  /* Estados del ciclo de vida */
+  --status-operativo: oklch(0.596 0.145 163.225); /* emerald-600 */
+  --status-mantenimiento: oklch(0.795 0.184 86.047); /* yellow-500 */
+  --status-reparacion: oklch(0.637 0.237 25.331); /* red-500 */
+  --status-retirado: oklch(0.709 0.01 56.259); /* stone-400 */
+  --status-garantia: oklch(0.546 0.245 262.881); /* blue-600 */
+
+  --sidebar: oklch(0.97 0.001 106.424);
+  --sidebar-foreground: oklch(0.216 0.006 56.043);
+  --sidebar-primary: oklch(0.769 0.188 70.08);
+  --sidebar-primary-foreground: oklch(0.147 0.004 49.25);
+  --sidebar-accent: oklch(0.923 0.003 48.717);
+  --sidebar-accent-foreground: oklch(0.216 0.006 56.043);
+  --sidebar-border: oklch(0.923 0.003 48.717);
+  --sidebar-ring: oklch(0.769 0.188 70.08);
+}
+
+.dark {
+  --background: oklch(0.147 0.004 49.25); /* stone-950 */
+  --foreground: oklch(0.97 0.001 106.424); /* stone-100 */
+  --card: oklch(0.216 0.006 56.043); /* stone-900 */
+  --card-foreground: oklch(0.97 0.001 106.424);
+  --popover: oklch(0.216 0.006 56.043);
+  --popover-foreground: oklch(0.97 0.001 106.424);
+
+  --primary: oklch(0.828 0.189 84.429); /* amber-400 */
+  --primary-foreground: oklch(0.147 0.004 49.25);
+
+  --secondary: oklch(0.293 0.009 56.259); /* stone-800 */
+  --secondary-foreground: oklch(0.97 0.001 106.424);
+  --muted: oklch(0.293 0.009 56.259);
+  --muted-foreground: oklch(0.709 0.01 56.259); /* stone-400 */
+  --accent: oklch(0.293 0.009 56.259);
+  --accent-foreground: oklch(0.97 0.001 106.424);
+  --destructive: oklch(0.704 0.191 22.216); /* red-400 */
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.828 0.189 84.429);
+
+  --chart-1: oklch(0.696 0.17 162.48);
+  --chart-2: oklch(0.795 0.184 86.047);
+  --chart-3: oklch(0.637 0.237 25.331);
+  --chart-4: oklch(0.623 0.214 259.815);
+  --chart-5: oklch(0.709 0.01 56.259);
+
+  --status-operativo: oklch(0.696 0.17 162.48);
+  --status-mantenimiento: oklch(0.795 0.184 86.047);
+  --status-reparacion: oklch(0.704 0.191 22.216);
+  --status-retirado: oklch(0.709 0.01 56.259);
+  --status-garantia: oklch(0.623 0.214 259.815);
+
+  --sidebar: oklch(0.216 0.006 56.043);
+  --sidebar-foreground: oklch(0.97 0.001 106.424);
+  --sidebar-primary: oklch(0.828 0.189 84.429);
+  --sidebar-primary-foreground: oklch(0.147 0.004 49.25);
+  --sidebar-accent: oklch(0.293 0.009 56.259);
+  --sidebar-accent-foreground: oklch(0.97 0.001 106.424);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.828 0.189 84.429);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
 }
