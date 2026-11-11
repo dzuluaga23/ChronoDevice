@@ -17,6 +17,7 @@ import {
   unique,
   uuid,
 } from "drizzle-orm/pg-core";
+import { user } from "./auth-schema";
 
 /* ───────────────────────── Enums ───────────────────────── */
 
@@ -70,15 +71,14 @@ export const companies = pgTable("companies", {
     .defaultNow(),
 });
 
-/**
- * Usuario ↔ Empresa + rol. `userId` referencia al usuario de Better Auth
- * (auth_user.id) — la FK se agrega en el Sprint 2 junto al esquema de auth.
- */
+/** Usuario ↔ Empresa + rol. FK al usuario de Better Auth. */
 export const memberships = pgTable(
   "memberships",
   {
     id: uuid("id").primaryKey().defaultRandom(),
-    userId: text("user_id").notNull(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
     companyId: uuid("company_id")
       .notNull()
       .references(() => companies.id, { onDelete: "cascade" }),
@@ -181,8 +181,10 @@ export const assets = pgTable(
     supplierId: uuid("supplier_id").references(() => suppliers.id, {
       onDelete: "set null",
     }),
-    /** Responsable del activo (usuario de Better Auth; FK en Sprint 2). */
-    responsibleUserId: text("responsible_user_id"),
+    /** Responsable del activo (usuario de Better Auth). */
+    responsibleUserId: text("responsible_user_id").references(() => user.id, {
+      onDelete: "set null",
+    }),
     purchaseDate: timestamp("purchase_date", { withTimezone: true }),
     purchasePrice: numeric("purchase_price", { precision: 12, scale: 2 }),
     notes: text("notes"),

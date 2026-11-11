@@ -90,8 +90,10 @@ npm install
 cp .env.example .env
 # Editar .env con tus valores (ver sección Variables de entorno)
 
-# 3. Aplicar el esquema a la base de datos
-npm run db:push
+# 3. Generar y aplicar migraciones, y sembrar datos de prueba
+npm run db:generate
+npm run db:migrate
+npm run db:seed
 
 # 4. Levantar en desarrollo
 npm run dev
@@ -118,7 +120,8 @@ Abre [http://localhost:3000](http://localhost:3000).
 | `npm run dev` | Servidor de desarrollo |
 | `npm run build` | Build de producción |
 | `npm run lint` | Linter |
-| `npm run db:push` | Aplicar el esquema Drizzle a la BD |
+| `npm run db:generate` | Generar migraciones desde el esquema Drizzle |
+| `npm run db:migrate` | Aplicar migraciones a la BD |
 | `npm run db:studio` | Abrir Drizzle Studio (explorador de BD) |
 | `npm run db:seed` | Datos de prueba |
 
