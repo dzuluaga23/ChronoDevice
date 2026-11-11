@@ -18,14 +18,14 @@
 
 ## Sprint 1 — Base de datos
 
-- [ ] Configurar Drizzle ORM + conexión a Neon
-- [ ] Esquema: `companies`, `users`, `memberships` (usuario↔empresa + rol)
-- [ ] Esquema: `assets` (activo) + `categories`, `locations`, `suppliers`
-- [ ] Esquema: `maintenances`, `repairs`, `warranties`
-- [ ] Esquema: `attachments` (fotos/documentos), `alerts`
-- [ ] Regla multi-tenant: `company_id` en todas las tablas de negocio
-- [ ] Migraciones generadas y aplicadas en Neon
-- [ ] Seed de datos de prueba
+- [x] Configurar Drizzle ORM + conexión a Neon
+- [x] Esquema: `companies`, `users`, `memberships` (usuario↔empresa + rol)
+- [x] Esquema: `assets` (activo) + `categories`, `locations`, `suppliers`
+- [x] Esquema: `maintenances`, `repairs`, `warranties`
+- [x] Esquema: `attachments` (fotos/documentos), `alerts`
+- [x] Regla multi-tenant: `company_id` en todas las tablas de negocio
+- [x] Migraciones generadas y aplicadas en Neon
+- [x] Seed de datos de prueba
 - [ ] Diagrama entidad-relación documentado
 
 ## Sprint 2 — Backend
