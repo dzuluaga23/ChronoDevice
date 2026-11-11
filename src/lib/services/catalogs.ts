@@ -7,14 +7,19 @@ import type { AuthContext } from "@/lib/auth/session";
 import * as catalogsRepo from "@/lib/repositories/catalogs";
 import type { CatalogKind } from "@/lib/repositories/catalogs";
 
-/** Detecta violación de unique (código Postgres 23505). */
+/**
+ * Detecta violación de unique (código Postgres 23505). Drizzle envuelve
+ * el error de pg en DrizzleQueryError: el `code` está en la cadena de
+ * `cause`, no en el error superficial.
+ */
 function isUniqueViolation(err: unknown): boolean {
-  return (
-    typeof err === "object" &&
-    err !== null &&
-    "code" in err &&
-    (err as { code?: unknown }).code === "23505"
-  );
+  let current: unknown = err;
+  while (typeof current === "object" && current !== null) {
+    const e = current as { code?: unknown; cause?: unknown };
+    if (e.code === "23505") return true;
+    current = e.cause;
+  }
+  return false;
 }
 
 export async function listCatalog(
