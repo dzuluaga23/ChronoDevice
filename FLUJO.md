@@ -1,0 +1,109 @@
+# FLUJO — Plan de desarrollo ChronoDevice
+
+> Ruta de desarrollo por sprints: **BD → Backend → Frontend → Publicación**.
+> Marca cada ítem con `[x]` cuando esté completado.
+
+---
+
+## Sprint 0 — Cimientos
+
+- [x] Crear repo en GitHub y conectarlo al directorio local
+- [x] Crear cuenta en Neon (Postgres gratis) y obtener connection string
+- [ ] Crear cuenta en Vercel (con GitHub)
+- [ ] Scaffolding de Next.js (App Router) + TypeScript + Tailwind + ESLint
+- [ ] Instalar Shadcn/ui y componentes base
+- [ ] Definir design tokens de **Chrono UI** (colores, tipografía, espaciados, estados)
+- [ ] Primer deploy a Vercel (app "hola mundo" publicada)
+- [ ] Variables de entorno configuradas localmente y en Vercel
+
+## Sprint 1 — Base de datos
+
+- [ ] Configurar Drizzle ORM + conexión a Neon
+- [ ] Esquema: `companies`, `users`, `memberships` (usuario↔empresa + rol)
+- [ ] Esquema: `assets` (activo) + `categories`, `locations`, `suppliers`
+- [ ] Esquema: `maintenances`, `repairs`, `warranties`
+- [ ] Esquema: `attachments` (fotos/documentos), `alerts`
+- [ ] Regla multi-tenant: `company_id` en todas las tablas de negocio
+- [ ] Migraciones generadas y aplicadas en Neon
+- [ ] Seed de datos de prueba
+- [ ] Diagrama entidad-relación documentado
+
+## Sprint 2 — Backend
+
+- [ ] Better Auth: registro, login, sesión
+- [ ] Flujo multi-empresa: crear empresa / invitar usuarios / roles (admin, técnico, consulta)
+- [ ] Arquitectura por capas: `route → service → repository → Drizzle`
+- [ ] Repositories con filtro automático por `company_id`
+- [ ] Endpoints CRUD: activos, categorías, marcas, ubicaciones, proveedores, responsables
+- [ ] Endpoints: mantenimientos, reparaciones, garantías, costos acumulados
+- [ ] Validación con Zod en todos los endpoints (esquemas compartidos con el front)
+- [ ] Manejo de errores y respuestas consistentes
+
+## Sprint 3 — Front CRUD
+
+- [ ] Layout de la aplicación (sidebar, topbar, área de trabajo)
+- [ ] Páginas de login / registro / crear empresa
+- [ ] CRUD de activos con formularios (React Hook Form + Zod)
+- [ ] Tabla de inventario densa con filtros, búsqueda y estados de ciclo de vida
+- [ ] CRUD de catálogos (categorías, ubicaciones, proveedores, marcas)
+- [ ] Página de detalle de activo con timeline del historial
+
+## Sprint 4 — Ciclo de vida
+
+- [ ] Registro de mantenimientos (realizados y programados)
+- [ ] Registro de reparaciones con costos
+- [ ] Gestión de garantías (inicio, fin, estado activa/vencida)
+- [ ] Cálculo de costos acumulados por activo
+- [ ] Vista "próximos mantenimientos" con orden por fecha
+- [ ] Cambio de estado del activo según su ciclo de vida
+
+## Sprint 5 — QR y adjuntos
+
+- [ ] Generación de códigos QR por activo (`qrcode`)
+- [ ] Etiqueta imprimible (QR + código + nombre + empresa)
+- [ ] Página pública de consulta por QR (sin login, datos no sensibles)
+- [ ] Escaneo desde cámara móvil (`html5-qrcode`)
+- [ ] Cloudflare R2: bucket y configuración
+- [ ] Subida de fotos y documentos (múltiples, con progreso)
+- [ ] Vista de galería de adjuntos en el detalle del activo
+
+## Sprint 6 — Dashboard y alertas
+
+- [ ] Dashboard con estadísticas (KPIs: activos, costos, garantías por vencer)
+- [ ] Gráficas con Recharts (activos por categoría, costos por mes, estados)
+- [ ] Búsqueda global con command palette (Ctrl+K)
+- [ ] Resend: envío de emails
+- [ ] Vercel Cron: revisión diaria de garantías por vencer y mantenimientos programados
+- [ ] Centro de alertas dentro de la app
+- [ ] Exportes: CSV del inventario y PDF del historial de un activo
+
+## Sprint 7 — Publicación
+
+- [ ] Pulido de UI y responsive
+- [ ] Seguridad: página pública protegida contra enumeración de IDs
+- [ ] Verificación de reglas multi-tenant (auditoría de queries)
+- [ ] README completo y capturas
+- [ ] Dominio configurado (opcional)
+- [ ] 🚀 **Publicado**
+
+---
+
+## Decisiones técnicas
+
+| Tema | Decisión | Motivo |
+|---|---|---|
+| Framework | Next.js (App Router) full-stack | Un solo repo y deploy; API Routes reemplazan a Hono |
+| Arquitectura backend | Por capas (route → service → repository) | Testable sin la ceremonia de Clean Architecture |
+| Multi-tenancy | Una BD compartida, aislamiento por `company_id` + RLS opcional | Simple, barato y escalable |
+| Docker | Descartado | Innecesario con Vercel + Neon |
+| Hono | Descartado (migración futura posible) | Next API Routes cubren la necesidad |
+
+## Cuentas gratuitas necesarias
+
+| Servicio | Uso | Registro |
+|---|---|---|
+| GitHub | Repositorio y CI | github.com |
+| Vercel | Hosting + funciones + cron | vercel.com (con GitHub) |
+| Neon | Postgres gratis (1 GB, sin tarjeta) | console.neon.tech |
+| Cloudflare R2 | Almacenamiento de archivos (10 GB) | dash.cloudflare.com |
+| Resend | Emails de alerta (3.000/mes) | resend.com |
