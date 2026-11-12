@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -50,18 +51,22 @@ export default function Home() {
       </Card>
 
       <div className="flex items-center gap-3">
-        <Button size="lg" disabled>
-          Empezar pronto
-          <ArrowRight data-icon="inline-end" />
+        <Button size="lg" asChild>
+          <Link href="/registro">
+            Empezar gratis
+            <ArrowRight data-icon="inline-end" />
+          </Link>
         </Button>
-        <Button size="lg" variant="outline" disabled>
-          <Activity data-icon="inline-start" />
-          Ver demo
+        <Button size="lg" variant="outline" asChild>
+          <Link href="/login">
+            <Activity data-icon="inline-start" />
+            Ya tengo cuenta
+          </Link>
         </Button>
       </div>
 
       <p className="font-mono text-xs tracking-wider text-muted-foreground uppercase">
-        Sprint 0 · En construcción
+        Multi-empresa · Historial completo · QR y alertas en camino
       </p>
     </main>
   );

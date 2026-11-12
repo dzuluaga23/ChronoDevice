@@ -42,12 +42,12 @@
 
 ## Sprint 3 — Front CRUD
 
-- [ ] Layout de la aplicación (sidebar, topbar, área de trabajo)
-- [ ] Páginas de login / registro / crear empresa
-- [ ] CRUD de activos con formularios (React Hook Form + Zod)
-- [ ] Tabla de inventario densa con filtros, búsqueda y estados de ciclo de vida
-- [ ] CRUD de catálogos (categorías, ubicaciones, proveedores, marcas)
-- [ ] Página de detalle de activo con timeline del historial
+- [x] Layout de la aplicación (sidebar, topbar móvil, área de trabajo)
+- [x] Páginas de login / registro / crear empresa *(formularios nativos + fetch; RHF pendiente si se desea)*
+- [x] CRUD de activos con formularios (crear + editar, catálogos y responsables en selects)
+- [x] Tabla de inventario densa con filtros, búsqueda y estados de ciclo de vida
+- [x] CRUD de catálogos (categorías, ubicaciones, proveedores, marcas) en pestañas
+- [x] Página de detalle de activo con timeline del historial + costos acumulados
 
 ## Sprint 4 — Ciclo de vida
 
