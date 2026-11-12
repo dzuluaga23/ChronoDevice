@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "cn";
-import { Boxes, LogOut, Settings2 } from "lucide-react";
+import { Boxes, CalendarClock, LogOut, Settings2 } from "lucide-react";
 import { signOut } from "@/lib/auth-client";
 
 interface AppSidebarProps {
@@ -15,6 +15,7 @@ interface AppSidebarProps {
 
 const NAV_ITEMS = [
   { href: "/activos", label: "Activos", icon: Boxes },
+  { href: "/mantenimientos", label: "Próximos", icon: CalendarClock },
   { href: "/catalogos", label: "Catálogos", icon: Settings2 },
 ];
 

@@ -9,6 +9,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { StatusBadge, formatDate, formatMoney } from "@/components/status-badge";
+import LifecycleActions from "@/components/forms/lifecycle-actions";
+import LifecycleTimeline from "@/components/lifecycle-timeline";
+import WarrantyList from "@/components/warranty-list";
 import { requireAuthOrRedirect } from "@/lib/auth/rsc";
 import * as lifecycleRepo from "@/lib/repositories/lifecycle";
 import * as assetsService from "@/lib/services/assets";
@@ -66,6 +69,9 @@ export default async function DetalleActivoPage({
         </Button>
       </div>
 
+      {/* Acciones de ciclo de vida */}
+      <LifecycleActions assetId={asset.id} status={asset.status as string} />
+
       <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
         {/* Columna principal: ficha + historial */}
         <div className="flex flex-col gap-6">
@@ -111,55 +117,7 @@ export default async function DetalleActivoPage({
               </span>
             </CardHeader>
             <CardContent>
-              {timeline.length === 0 ? (
-                <p className="py-6 text-center text-sm text-muted-foreground">
-                  Aún no hay mantenimientos ni reparaciones registrados.
-                </p>
-              ) : (
-                <ol className="relative flex flex-col gap-6 border-l border-border pl-6">
-                  {timeline.map((ev) => (
-                    <li key={`${ev.kind}-${ev.id}`} className="relative">
-                      <span
-                        className={
-                          "absolute top-1 -left-[calc(1.5rem+5px)] size-2.5 rounded-full ring-4 ring-card " +
-                          (ev.kind === "repair"
-                            ? "bg-status-reparacion"
-                            : "bg-status-mantenimiento")
-                        }
-                      />
-                      <div className="flex flex-wrap items-baseline gap-2">
-                        <time
-                          dateTime={new Date(ev.date).toISOString()}
-                          className="font-mono text-xs text-muted-foreground"
-                        >
-                          {formatDate(ev.date)}
-                        </time>
-                        <span
-                          className={
-                            "rounded px-1.5 py-0.5 font-mono text-[10px] tracking-wider uppercase " +
-                            (ev.kind === "repair"
-                              ? "bg-status-reparacion/10 text-red-700 dark:text-red-400"
-                              : "bg-status-mantenimiento/10 text-yellow-700 dark:text-yellow-400")
-                          }
-                        >
-                          {ev.kind === "repair" ? "Reparación" : "Mantenimiento"}
-                        </span>
-                        {ev.cost && (
-                          <span className="ml-auto font-mono text-xs">
-                            {formatMoney(ev.cost)}
-                          </span>
-                        )}
-                      </div>
-                      <p className="mt-1 text-sm">{ev.description}</p>
-                      {ev.technician && (
-                        <p className="text-xs text-muted-foreground">
-                          Técnico: {ev.technician}
-                        </p>
-                      )}
-                    </li>
-                  ))}
-                </ol>
-              )}
+              <LifecycleTimeline events={timeline} />
             </CardContent>
           </Card>
         </div>
@@ -190,46 +148,16 @@ export default async function DetalleActivoPage({
               <CalendarDays className="size-4 text-muted-foreground" />
               <CardTitle className="text-base">Garantías</CardTitle>
             </CardHeader>
-            <CardContent className="flex flex-col gap-3">
-              {warranties.length === 0 ? (
-                <p className="text-sm text-muted-foreground">
-                  Sin garantía registrada.
-                </p>
-              ) : (
-                warranties.map((w) => {
-                  const ended = new Date(w.endDate) < new Date();
-                  return (
-                    <div
-                      key={w.id}
-                      className="rounded-lg border border-border p-3 text-sm"
-                    >
-                      <div className="flex items-center justify-between">
-                        <span className="font-medium">
-                          {w.provider ?? "Garantía"}
-                        </span>
-                        <span
-                          className={
-                            "rounded px-1.5 py-0.5 font-mono text-[10px] tracking-wider uppercase " +
-                            (ended
-                              ? "bg-muted text-muted-foreground"
-                              : "bg-status-garantia/10 text-blue-700 dark:text-blue-400")
-                          }
-                        >
-                          {ended ? "Vencida" : "Activa"}
-                        </span>
-                      </div>
-                      <p className="mt-1 font-mono text-xs text-muted-foreground">
-                        {formatDate(w.startDate)} → {formatDate(w.endDate)}
-                      </p>
-                      {w.coverageNotes && (
-                        <p className="mt-1 text-xs text-muted-foreground">
-                          {w.coverageNotes}
-                        </p>
-                      )}
-                    </div>
-                  );
-                })
-              )}
+            <CardContent>
+              <WarrantyList
+                warranties={warranties.map((w) => ({
+                  id: w.id,
+                  provider: w.provider,
+                  startDate: w.startDate as string | Date,
+                  endDate: w.endDate as string | Date,
+                  coverageNotes: w.coverageNotes,
+                }))}
+              />
             </CardContent>
           </Card>
         </div>

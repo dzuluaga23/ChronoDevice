@@ -2,9 +2,16 @@
  * Repositorio del ciclo de vida: mantenimientos, reparaciones y garantías.
  * Toda query filtra por companyId (regla multi-tenant).
  */
-import { and, desc, eq, sql } from "drizzle-orm";
+import {
+  and,
+  asc,
+  desc,
+  eq,
+  isNotNull,
+  sql,
+} from "drizzle-orm";
 import { db } from "@/lib/db";
-import { maintenances, repairs, warranties } from "@/lib/db/schema";
+import { assets, maintenances, repairs, warranties } from "@/lib/db/schema";
 
 /* ── Mantenimientos ── */
 
@@ -147,8 +154,33 @@ export async function deleteWarrantyRow(companyId: string, id: string) {
   return row ?? null;
 }
 
-/* ── Historial y costos acumulados ── */
+/* ── Próximos mantenimientos (para la vista de agenda) ── */
 
+/** Mantenimientos con fecha próxima programada, del más inmediato al más lejano. */
+export async function listUpcomingMaintenances(companyId: string) {
+  return db
+    .select({
+      id: maintenances.id,
+      assetId: maintenances.assetId,
+      assetCode: assets.code,
+      assetName: assets.name,
+      assetStatus: assets.status,
+      type: maintenances.type,
+      nextAt: maintenances.nextAt,
+      technician: maintenances.technician,
+    })
+    .from(maintenances)
+    .innerJoin(assets, eq(assets.id, maintenances.assetId))
+    .where(
+      and(
+        eq(maintenances.companyId, companyId),
+        isNotNull(maintenances.nextAt),
+      ),
+    )
+    .orderBy(asc(maintenances.nextAt));
+}
+
+/* ── Historial y costos acumulados ── */
 export interface TimelineEvent {
   kind: "maintenance" | "repair";
   id: string;

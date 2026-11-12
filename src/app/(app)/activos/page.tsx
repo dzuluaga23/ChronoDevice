@@ -137,12 +137,12 @@ export default async function ActivosPage({
             <TableBody>
               {items.map((a) => (
                 <TableRow key={a.id} className="group relative">
-                  <Link
-                    href={`/activos/${a.id}`}
-                    className="absolute inset-0 z-10 outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
-                    aria-label={`Ver ${a.name}`}
-                  />
-                  <TableCell className="font-mono text-xs font-medium">
+                  <TableCell className="relative font-mono text-xs font-medium">
+                    <Link
+                      href={`/activos/${a.id}`}
+                      className="absolute inset-0 z-10 outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+                      aria-label={`Ver ${a.name}`}
+                    />
                     {a.code}
                   </TableCell>
                   <TableCell className="max-w-48 truncate font-medium group-hover:underline">

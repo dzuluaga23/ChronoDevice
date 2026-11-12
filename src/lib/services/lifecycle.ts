@@ -4,7 +4,11 @@
  * en sesión (aislamiento multi-tenant).
  */
 import { badRequest, notFound } from "@/lib/api/http";
+import { and, eq } from "drizzle-orm";
 import type { AuthContext } from "@/lib/auth/session";
+import { db } from "@/lib/db";
+import { assets } from "@/lib/db/schema";
+import * as assetsRepo from "@/lib/repositories/assets";
 import * as assetsService from "@/lib/services/assets";
 import * as lifecycleRepo from "@/lib/repositories/lifecycle";
 import type {
@@ -15,6 +19,29 @@ import type {
   UpdateRepairInput,
   UpdateWarrantyInput,
 } from "@/lib/validators/lifecycle";
+
+/* ── Estado automático del activo ── */
+
+/**
+ * Al registrar un evento de ciclo de vida el activo refleja su estado:
+ * mantenimiento → en_mantenimiento, reparación → en_reparacion.
+ * Los activos retirados no cambian de estado.
+ */
+async function reflectAssetStatus(
+  companyId: string,
+  assetId: string,
+  status: "en_mantenimiento" | "en_reparacion",
+) {
+  const [asset] = await db
+    .select({ status: assets.status })
+    .from(assets)
+    .where(and(eq(assets.companyId, companyId), eq(assets.id, assetId)))
+    .limit(1);
+
+  if (asset && asset.status !== "retirado" && asset.status !== status) {
+    await assetsRepo.updateAsset(companyId, assetId, { status });
+  }
+}
 
 /* ── Mantenimientos ── */
 
@@ -32,11 +59,13 @@ export async function createMaintenance(
   input: CreateMaintenanceInput,
 ) {
   await assetsService.assertAssetExists(ctx.companyId, assetId);
-  return lifecycleRepo.insertMaintenance({
+  const row = await lifecycleRepo.insertMaintenance({
     ...input,
     companyId: ctx.companyId,
     assetId,
   });
+  await reflectAssetStatus(ctx.companyId, assetId, "en_mantenimiento");
+  return row;
 }
 
 export async function updateMaintenance(
@@ -72,11 +101,13 @@ export async function createRepair(
   input: CreateRepairInput,
 ) {
   await assetsService.assertAssetExists(ctx.companyId, assetId);
-  return lifecycleRepo.insertRepair({
+  const row = await lifecycleRepo.insertRepair({
     ...input,
     companyId: ctx.companyId,
     assetId,
   });
+  await reflectAssetStatus(ctx.companyId, assetId, "en_reparacion");
+  return row;
 }
 
 export async function updateRepair(

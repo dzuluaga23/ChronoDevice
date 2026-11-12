@@ -51,12 +51,12 @@
 
 ## Sprint 4 — Ciclo de vida
 
-- [ ] Registro de mantenimientos (realizados y programados)
-- [ ] Registro de reparaciones con costos
-- [ ] Gestión de garantías (inicio, fin, estado activa/vencida)
-- [ ] Cálculo de costos acumulados por activo
-- [ ] Vista "próximos mantenimientos" con orden por fecha
-- [ ] Cambio de estado del activo según su ciclo de vida
+- [x] Registro de mantenimientos (realizados y programados)
+- [x] Registro de reparaciones con costos
+- [x] Gestión de garantías (inicio, fin, estado activa/vencida)
+- [x] Cálculo de costos acumulados por activo
+- [x] Vista "próximos mantenimientos" con orden por fecha
+- [x] Cambio de estado del activo según su ciclo de vida
 
 ## Sprint 5 — QR y adjuntos
 
