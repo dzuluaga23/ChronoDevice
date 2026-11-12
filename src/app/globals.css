@@ -168,3 +168,15 @@
     @apply font-sans;
   }
 }
+
+/* Impresión de la etiqueta QR: solo sale el área de la etiqueta */
+@media print {
+  aside,
+  .no-print {
+    display: none !important;
+  }
+  .qr-label {
+    border: 1px solid #d4d4d4 !important;
+    border-radius: 0 !important;
+  }
+}

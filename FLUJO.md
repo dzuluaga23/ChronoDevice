@@ -60,10 +60,10 @@
 
 ## Sprint 5 — QR y adjuntos
 
-- [ ] Generación de códigos QR por activo (`qrcode`)
-- [ ] Etiqueta imprimible (QR + código + nombre + empresa)
-- [ ] Página pública de consulta por QR (sin login, datos no sensibles)
-- [ ] Escaneo desde cámara móvil (`html5-qrcode`)
+- [x] Generación de códigos QR por activo (`qrcode`)
+- [x] Etiqueta imprimible (QR + código + nombre + empresa)
+- [x] Página pública de consulta por QR (sin login, datos no sensibles)
+- [x] Escaneo desde cámara móvil (`html5-qrcode`)
 - [ ] Cloudflare R2: bucket y configuración
 - [ ] Subida de fotos y documentos (múltiples, con progreso)
 - [ ] Vista de galería de adjuntos en el detalle del activo

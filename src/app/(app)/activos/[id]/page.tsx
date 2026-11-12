@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, CalendarDays, CircleDollarSign, Wrench } from "lucide-react";
+import { ArrowLeft, CalendarDays, CircleDollarSign, QrCode, Wrench } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -64,6 +64,12 @@ export default async function DetalleActivoPage({
             {asset.name}
           </h1>
         </div>
+        <Button asChild variant="outline" size="sm" className="hidden sm:inline-flex">
+          <Link href={`/activos/${asset.id}/qr`}>
+            <QrCode data-icon="inline-start" />
+            Etiqueta QR
+          </Link>
+        </Button>
         <Button asChild variant="outline">
           <Link href={`/activos/${asset.id}/editar`}>Editar</Link>
         </Button>

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "cn";
-import { Boxes, CalendarClock, LogOut, Settings2 } from "lucide-react";
+import { Boxes, CalendarClock, LogOut, QrCode, Settings2 } from "lucide-react";
 import { signOut } from "@/lib/auth-client";
 
 interface AppSidebarProps {
@@ -16,6 +16,7 @@ interface AppSidebarProps {
 const NAV_ITEMS = [
   { href: "/activos", label: "Activos", icon: Boxes },
   { href: "/mantenimientos", label: "Próximos", icon: CalendarClock },
+  { href: "/escanear", label: "Escanear", icon: QrCode },
   { href: "/catalogos", label: "Catálogos", icon: Settings2 },
 ];
 
@@ -89,7 +90,7 @@ export default function AppSidebar({
       </aside>
 
       {/* Barra superior en móvil */}
-      <div className="fixed inset-x-0 top-0 z-40 flex items-center gap-1 overflow-x-auto border-b border-border bg-sidebar px-2 py-2 md:hidden">
+      <div className="no-print fixed inset-x-0 top-0 z-40 flex items-center gap-1 overflow-x-auto border-b border-border bg-sidebar px-2 py-2 md:hidden">
         {NAV_ITEMS.map((item) => {
           const active =
             pathname === item.href || pathname.startsWith(`${item.href}/`);

@@ -7,6 +7,7 @@ import {
   asc,
   desc,
   eq,
+  gte,
   isNotNull,
   sql,
 } from "drizzle-orm";
@@ -178,6 +179,32 @@ export async function listUpcomingMaintenances(companyId: string) {
       ),
     )
     .orderBy(asc(maintenances.nextAt));
+}
+
+/* ── Ficha pública (QR escaneado, sin login) ── */
+
+/** Datos no sensibles para la vista pública: garantía vigente + último mantenimiento. */
+export async function publicSummaryByAssetId(assetId: string) {
+  const now = new Date();
+  const [warranty, lastMaint] = await Promise.all([
+    db
+      .select({ endDate: warranties.endDate })
+      .from(warranties)
+      .where(and(eq(warranties.assetId, assetId), gte(warranties.endDate, now)))
+      .orderBy(desc(warranties.endDate))
+      .limit(1),
+    db
+      .select({ performedAt: maintenances.performedAt })
+      .from(maintenances)
+      .where(eq(maintenances.assetId, assetId))
+      .orderBy(desc(maintenances.performedAt))
+      .limit(1),
+  ]);
+
+  return {
+    warrantyUntil: warranty[0]?.endDate ?? null,
+    lastMaintenanceAt: lastMaint[0]?.performedAt ?? null,
+  };
 }
 
 /* ── Historial y costos acumulados ── */

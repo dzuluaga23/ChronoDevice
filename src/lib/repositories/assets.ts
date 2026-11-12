@@ -9,6 +9,7 @@ import {
   assets,
   brands,
   categories,
+  companies,
   locations,
   suppliers,
 } from "@/lib/db/schema";
@@ -156,4 +157,32 @@ export async function listRecentAssets(companyId: string, limit = 5) {
     .where(eq(assets.companyId, companyId))
     .orderBy(desc(assets.createdAt))
     .limit(limit);
+}
+
+/**
+ * Ficha pública para el QR escaneado: consulta SIN companyId (a propósito,
+ * es la vista sin login) y devuelve solo datos no sensibles — sin serial,
+ * sin costos, sin notas.
+ */
+export async function getPublicAssetById(assetId: string) {
+  const [row] = await db
+    .select({
+      id: assets.id,
+      code: assets.code,
+      name: assets.name,
+      status: assets.status,
+      model: assets.model,
+      companyName: companies.name,
+      categoryName: categories.name,
+      brandName: brands.name,
+      locationName: locations.name,
+    })
+    .from(assets)
+    .innerJoin(companies, eq(companies.id, assets.companyId))
+    .leftJoin(categories, eq(categories.id, assets.categoryId))
+    .leftJoin(brands, eq(brands.id, assets.brandId))
+    .leftJoin(locations, eq(locations.id, assets.locationId))
+    .where(eq(assets.id, assetId))
+    .limit(1);
+  return row ?? null;
 }
