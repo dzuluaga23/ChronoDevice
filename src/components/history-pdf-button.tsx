@@ -318,7 +318,7 @@ export default function HistoryPdfButton({
       </Button>
 
       <Dialog open={open} onOpenChange={handleClose}>
-        <DialogContent className="flex h-[85vh] max-w-3xl flex-col gap-0 p-0">
+        <DialogContent className="h-[85dvh] max-w-3xl gap-0 overflow-hidden p-0">
           {/* Barra superior minimalista */}
           <DialogTitle className="sr-only">Previsualización del PDF</DialogTitle>
           <div className="flex items-center justify-between gap-3 border-b border-border px-4 py-2.5">
