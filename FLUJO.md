@@ -9,12 +9,12 @@
 
 - [x] Crear repo en GitHub y conectarlo al directorio local
 - [x] Crear cuenta en Neon (Postgres gratis) y obtener connection string
-- [ ] Crear cuenta en Vercel (con GitHub)
+- [x] Crear cuenta en Vercel (con GitHub)
 - [x] Scaffolding de Next.js (App Router) + TypeScript + Tailwind + ESLint
 - [x] Instalar Shadcn/ui y componentes base
 - [x] Definir design tokens de **Chrono UI** (colores, tipografía, espaciados, estados)
-- [ ] Primer deploy a Vercel (app "hola mundo" publicada)
-- [ ] Variables de entorno configuradas localmente y en Vercel
+- [x] Primer deploy a Vercel (app "hola mundo" publicada) → https://chrono-device.vercel.app
+- [x] Variables de entorno configuradas localmente y en Vercel
 
 ## Sprint 1 — Base de datos
 
@@ -80,12 +80,14 @@
 
 ## Sprint 7 — Publicación
 
-- [ ] Pulido de UI y responsive
-- [ ] Seguridad: página pública protegida contra enumeración de IDs
-- [ ] Verificación de reglas multi-tenant (auditoría de queries)
-- [ ] README completo y capturas
+- [x] Pulido de UI y responsive
+- [x] Seguridad: página pública protegida contra enumeración de IDs (UUIDs, sin datos sensibles)
+- [x] Verificación de reglas multi-tenant (auditoría de queries, sesiones cruzadas → 404/403)
+- [x] README completo y capturas *(README completo; capturas pendientes de agregar)*
 - [ ] Dominio configurado (opcional)
-- [ ] 🚀 **Publicado**
+- [x] 🚀 **Publicado** → https://chrono-device.vercel.app (Nov 2026)
+
+> Cron diario y alertas operando en producción; Resend opcional (pendiente de activar si se desea).
 
 ---
 
