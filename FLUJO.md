@@ -70,13 +70,13 @@
 
 ## Sprint 6 — Dashboard y alertas
 
-- [ ] Dashboard con estadísticas (KPIs: activos, costos, garantías por vencer)
-- [ ] Gráficas con Recharts (activos por categoría, costos por mes, estados)
-- [ ] Búsqueda global con command palette (Ctrl+K)
-- [ ] Resend: envío de emails
-- [ ] Vercel Cron: revisión diaria de garantías por vencer y mantenimientos programados
-- [ ] Centro de alertas dentro de la app
-- [ ] Exportes: CSV del inventario y PDF del historial de un activo
+- [x] Dashboard con estadísticas (KPIs: activos, costos, garantías por vencer)
+- [x] Gráficas con Recharts (activos por categoría, costos por mes, estados)
+- [x] Búsqueda global con command palette (Ctrl+K)
+- [x] Resend: envío de emails *(opcional: sin RESEND_API_KEY el cron igual crea alertas; con key manda resumen a los miembros)*
+- [x] Vercel Cron: revisión diaria de garantías por vencer y mantenimientos programados (`vercel.json` + `/api/cron/daily` con CRON_SECRET)
+- [x] Centro de alertas dentro de la app (`/alertas`, descartables)
+- [x] Exportes: CSV del inventario (`/api/assets/export`) y PDF del historial de un activo (jsPDF en el navegador)
 
 ## Sprint 7 — Publicación
 

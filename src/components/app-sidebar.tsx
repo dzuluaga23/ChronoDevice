@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "cn";
-import { Boxes, CalendarClock, LogOut, QrCode, Settings2 } from "lucide-react";
+import { BellRing, Boxes, CalendarClock, LayoutDashboard, LogOut, QrCode, Search, Settings2 } from "lucide-react";
 import { signOut } from "@/lib/auth-client";
+import GlobalSearch, { OPEN_SEARCH_EVENT } from "@/components/global-search";
 
 interface AppSidebarProps {
   companyName: string;
@@ -14,8 +15,10 @@ interface AppSidebarProps {
 }
 
 const NAV_ITEMS = [
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/activos", label: "Activos", icon: Boxes },
   { href: "/mantenimientos", label: "Próximos", icon: CalendarClock },
+  { href: "/alertas", label: "Alertas", icon: BellRing },
   { href: "/escanear", label: "Escanear", icon: QrCode },
   { href: "/catalogos", label: "Catálogos", icon: Settings2 },
 ];
@@ -69,6 +72,20 @@ export default function AppSidebar({
           </Link>
         ))}
       </nav>
+      {/* Desktop: caja de búsqueda (Ctrl+K) */}
+      <div className="px-2 pb-2">
+        <button
+          type="button"
+          onClick={() => window.dispatchEvent(new CustomEvent(OPEN_SEARCH_EVENT))}
+          className="flex w-full items-center gap-2 rounded-md border border-border bg-background px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted"
+        >
+          <Search className="size-4" />
+          Buscar…
+          <kbd className="ml-auto rounded border border-border px-1.5 font-mono text-[10px]">
+            Ctrl+K
+          </kbd>
+        </button>
+      </div>
       <div className="mt-auto border-t border-border p-2">
         <button
           type="button"
@@ -116,6 +133,7 @@ export default function AppSidebar({
               {item.label}
             </Link>
           ))}
+          <GlobalSearch />
           <button
             type="button"
             onClick={onSignOut}

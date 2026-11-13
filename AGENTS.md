@@ -74,5 +74,13 @@ npm run db:seed      # siembra empresa DemoCorp (idempotente)
 ## Next.js 16 — gotchas
 
 - `params`/`searchParams`/`cookies()`/`headers()` son **async** (Promise). En route handlers dinámicos: `type RouteParams = { params: Promise<{ id: string }> }`.
+- Lint rechaza `setState` síncrono en efectos (`react-hooks/set-state-in-effect`): derivar estado en el render (ej. `loading = fetchedFor !== q`) en vez de setear en el efecto; `Date.now()`/`new Date()` durante render también se rechaza en client components (pasar `nowMs` como prop desde el server).
+- Server pages privadas llevan `export const instant = false`.
 - Route handlers no se cachean por defecto; `middleware` se llama `proxy.ts`.
 - `next build` ya no corre lint ni valida por sí solo el ESLint.
+
+## Sprint 6 — dashboard/alertas/cron
+
+- Alertas: el cron `/api/cron/daily` (Bearer CRON_SECRET) genera garantía_por_vencer (≤30d), garantia_vencida (≤7d desde vencida) y mantenimiento_programado (≤7d). Dedupe por (tipo, activo, fecha) — idempotente.
+- `vercel.json` define el cron diario 13:00 UTC. Sin `RESEND_API_KEY` el cron funciona (crea alertas) y solo salta el correo.
+- Exportes: CSV vía `/api/assets/export` (`<a>` normal, no Link — lint exige disable comment); PDF con `jspdf`+`jspdf-autotable` importados dinámicamente en el click (bundle solo al usarlo).

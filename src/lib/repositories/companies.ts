@@ -47,6 +47,14 @@ export async function insertCompany(name: string, slug: string) {
   return company;
 }
 
+/**
+ * CRON: todas las empresas (query global intencional — el trabajo diario
+ * recorre todas las compañías para generar sus alertas).
+ */
+export async function listAllCompanies() {
+  return db.select({ id: companies.id, name: companies.name }).from(companies);
+}
+
 export async function insertMembership(
   userId: string,
   companyId: string,

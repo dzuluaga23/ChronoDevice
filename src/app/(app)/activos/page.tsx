@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Plus, QrCode, Search } from "lucide-react";import { Button } from "@/components/ui/button";
+import { FileDown, Plus, QrCode, Search } from "lucide-react";import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -60,6 +60,15 @@ export default async function ActivosPage({
             <Plus data-icon="inline-start" />
             Nuevo activo
           </Link>
+        </Button>
+        <Button asChild variant="outline">
+          {/* <a> (no Link): es una descarga de API, no una página */}
+          {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+          <a href="/api/assets/export">
+            <FileDown data-icon="inline-start" />
+            <span className="hidden sm:inline">Exportar CSV</span>
+            <span className="sm:hidden">CSV</span>
+          </a>
         </Button>
       </div>
 

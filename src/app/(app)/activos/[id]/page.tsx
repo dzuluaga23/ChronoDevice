@@ -13,6 +13,7 @@ import LifecycleActions from "@/components/forms/lifecycle-actions";
 import LifecycleTimeline from "@/components/lifecycle-timeline";
 import WarrantyList from "@/components/warranty-list";
 import AttachmentsGallery from "@/components/attachments-gallery";
+import HistoryPdfButton from "@/components/history-pdf-button";
 import { requireAuthOrRedirect } from "@/lib/auth/rsc";
 import * as lifecycleRepo from "@/lib/repositories/lifecycle";
 import * as assetsService from "@/lib/services/assets";
@@ -72,6 +73,35 @@ export default async function DetalleActivoPage({
             <span className="sm:hidden">QR</span>
           </Link>
         </Button>
+        <HistoryPdfButton
+          companyName={ctx.companyName}
+          costs={{
+            purchase: purchase.toFixed(2),
+            maintenance: costs.maintenanceCost,
+            repair: costs.repairCost,
+            total: totalCost.toFixed(2),
+          }}
+          timeline={timeline.map((ev) => ({
+            kind: ev.kind,
+            date: ev.date.toISOString(),
+            description: ev.description,
+            technician: ev.technician,
+            cost: ev.cost,
+          }))}
+          asset={{
+            code: asset.code,
+            name: asset.name,
+            status: asset.status as string,
+            categoryName: asset.categoryName,
+            brandName: asset.brandName,
+            model: asset.model,
+            serialNumber: asset.serialNumber,
+            locationName: asset.locationName,
+            supplierName: asset.supplierName,
+            purchaseDate: (asset.purchaseDate as Date | null)?.toISOString() ?? null,
+            purchasePrice: asset.purchasePrice,
+          }}
+        />
         <Button asChild variant="outline">
           <Link href={`/activos/${asset.id}/editar`}>Editar</Link>
         </Button>

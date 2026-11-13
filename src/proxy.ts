@@ -10,6 +10,8 @@ const PRIVATE_PREFIXES = [
   "/catalogos",
   "/mantenimientos",
   "/escanear",
+  "/alertas",
+  "/dashboard",
   "/crear-empresa",
 ];
 
@@ -30,6 +32,8 @@ export const config = {
     "/catalogos",
     "/mantenimientos",
     "/escanear",
+    "/alertas",
+    "/dashboard",
     "/crear-empresa",
   ],
 };

@@ -101,6 +101,19 @@ export async function getAssetById(companyId: string, assetId: string) {
   return asset ?? null;
 }
 
+/** Exportación CSV: todos los activos de la empresa con sus catálogos. */
+export async function listAssetsForExport(companyId: string) {
+  return db
+    .select(assetListSelection)
+    .from(assets)
+    .leftJoin(categories, eq(categories.id, assets.categoryId))
+    .leftJoin(brands, eq(brands.id, assets.brandId))
+    .leftJoin(locations, eq(locations.id, assets.locationId))
+    .leftJoin(suppliers, eq(suppliers.id, assets.supplierId))
+    .where(eq(assets.companyId, companyId))
+    .orderBy(asc(assets.code));
+}
+
 /** Siguiente código disponible para la empresa (AST-0001, AST-0002, ...). */
 export async function nextAssetCode(companyId: string): Promise<string> {
   const [row] = await db
