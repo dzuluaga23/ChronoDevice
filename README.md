@@ -3,11 +3,13 @@
 > Sistema de gestión de activos, garantías y mantenimiento para empresas.
 > **El historial clínico de los activos de tu empresa.**
 
-**🚀 App en producción: [https://chrono-device.vercel.app](https://chrono-device.vercel.app)**
+**🚀 Pruébalo aquí: [https://chrono-device.vercel.app](https://chrono-device.vercel.app)** · gratis, sin tarjeta · crea tu cuenta en 1 minuto
 
 ## Descripción
 
 ChronoDevice permite a una empresa tener control total sobre sus equipos físicos: computadores, impresoras, celulares, routers, cámaras, herramientas, aires acondicionados, maquinaria y otros activos.
+
+> 👆 **Puedes usarlo ya mismo en [chrono-device.vercel.app](https://chrono-device.vercel.app)** — regístrate con tu correo y empieza a inventariar tus equipos gratis.
 
 Cada activo tiene un historial completo de su ciclo de vida:
 
