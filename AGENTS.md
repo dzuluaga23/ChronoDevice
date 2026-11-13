@@ -55,6 +55,16 @@ npm run db:seed      # siembra empresa DemoCorp (idempotente)
 - El cliente DB (`src/lib/db/index.ts`) debe mergear ambos esquemas (`{ ...schema, ...authSchema }`) o el drizzleAdapter falla con "Missing tables user, session...".
 - `requireSessionUser()` (solo sesión) ≠ `requireAuth()` (sesión + empresa activa). Un usuario recién registrado no tiene empresa: si `requireAuth` le exige membresía, no podría crear su primera empresa. Cuando no hay membresía, `requireAuth` lanza `403 { code: "no_company" }` para que el front redirija a crear empresa.
 - Sesión con campo `activeCompanyId`: cambiar empresa activa = `UPDATE session SET active_company_id` en `src/lib/services/companies.ts`.
+- POSTs externos al auth (scripts Node sin navegador) exigen header `Origin: http://localhost:3000` o devuelven `403 MISSING_OR_NULL_ORIGIN`.
+
+## UploadThing (7.7.x) — adjuntos
+
+- `UPLOADTHING_TOKEN` en `.env.local` (formato: un solo blob base64url que decodifica a JSON con `apiKey`, `appId`, `regions`). Sin token, la subida por UI falla; el resto de la app funciona.
+- El FileRouter vive en `src/lib/uploadthing.ts` (`assetFiles`: image+pdf, 8MB, 10 archivos). La tipación de `input` en el middleware exige la cadena `.input(zodSchema).middleware(...)`.
+- En los componentes generados (`src/app/api/uploadthing/uploadthing.ts`) la prop del endpoint es **`endpoint="assetFiles"`** (no `config`, que es otro objeto de optimización).
+- Se cambió Cloudflare R2 → UploadThing porque R2 exige registrar tarjeta para activar. `attachments.fileUrl` guarda la URL pública (`file.ufsUrl ?? file.url`).
+- Borrado: `DELETE /api/attachments/[id]` elimina fila + archivo en UT vía `UTApi().deleteFiles(fileKey)`.
+- Probar uploads por script Node requiere polyfill de `XMLHttpRequest` (el cliente UT lo usa) y `fetch` explícito en `genUploader` (cae en `window.fetch`).
 
 ## Base de datos
 

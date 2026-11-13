@@ -64,9 +64,9 @@
 - [x] Etiqueta imprimible (QR + código + nombre + empresa)
 - [x] Página pública de consulta por QR (sin login, datos no sensibles)
 - [x] Escaneo desde cámara móvil (`html5-qrcode`)
-- [ ] Cloudflare R2: bucket y configuración
-- [ ] Subida de fotos y documentos (múltiples, con progreso)
-- [ ] Vista de galería de adjuntos en el detalle del activo
+- [x] Almacenamiento de archivos: UploadThing (gratis, sin tarjeta; sustituye a R2 por su requisito de tarjeta)
+- [x] Subida de fotos y documentos (múltiples, con progreso)
+- [x] Vista de galería de adjuntos en el detalle del activo
 
 ## Sprint 6 — Dashboard y alertas
 
