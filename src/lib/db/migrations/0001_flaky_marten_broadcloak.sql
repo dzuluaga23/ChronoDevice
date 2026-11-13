@@ -1,0 +1,1 @@
+ALTER TABLE "attachments" ADD COLUMN "file_url" text NOT NULL;

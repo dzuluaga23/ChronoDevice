@@ -296,8 +296,10 @@ export const attachments = pgTable(
       .references(() => assets.id, { onDelete: "cascade" }),
     kind: attachmentKindEnum("kind").notNull(),
     fileName: text("file_name").notNull(),
-    /** Key del objeto en Cloudflare R2. */
+    /** Key del objeto en el storage. */
     fileKey: text("file_key").notNull(),
+    /** URL pública para descargar/ver el archivo (UploadThing). */
+    fileUrl: text("file_url").notNull(),
     mimeType: text("mime_type").notNull(),
     sizeBytes: integer("size_bytes").notNull(),
     uploadedAt: timestamp("uploaded_at", { withTimezone: true })

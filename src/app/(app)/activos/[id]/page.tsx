@@ -12,6 +12,7 @@ import { StatusBadge, formatDate, formatMoney } from "@/components/status-badge"
 import LifecycleActions from "@/components/forms/lifecycle-actions";
 import LifecycleTimeline from "@/components/lifecycle-timeline";
 import WarrantyList from "@/components/warranty-list";
+import AttachmentsGallery from "@/components/attachments-gallery";
 import { requireAuthOrRedirect } from "@/lib/auth/rsc";
 import * as lifecycleRepo from "@/lib/repositories/lifecycle";
 import * as assetsService from "@/lib/services/assets";
@@ -168,6 +169,9 @@ export default async function DetalleActivoPage({
           </Card>
         </div>
       </div>
+
+      {/* Fotos y documentos del activo */}
+      <AttachmentsGallery assetId={asset.id} />
     </div>
   );
 }
