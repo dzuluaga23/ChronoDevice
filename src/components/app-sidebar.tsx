@@ -35,7 +35,11 @@ export default function AppSidebar({
     router.refresh();
   }
 
-  const nav = (
+  const isActive = (href: string) =>
+    pathname === href || pathname.startsWith(`${href}/`);
+
+  /* Navegación del sidebar (desktop) */
+  const sidebarNav = (
     <>
       <div className="flex items-center gap-2 border-b border-border px-4 py-4">
         <div className="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary font-mono text-xs font-bold text-primary-foreground">
@@ -49,25 +53,21 @@ export default function AppSidebar({
         </div>
       </div>
       <nav className="flex flex-col gap-1 p-2">
-        {NAV_ITEMS.map((item) => {
-          const active =
-            pathname === item.href || pathname.startsWith(`${item.href}/`);
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "flex items-center gap-2.5 rounded-md px-3 py-2 text-sm font-medium transition-colors",
-                active
-                  ? "bg-primary/15 text-foreground"
-                  : "text-muted-foreground hover:bg-muted hover:text-foreground",
-              )}
-            >
-              <item.icon className="size-4" />
-              {item.label}
-            </Link>
-          );
-        })}
+        {NAV_ITEMS.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={cn(
+              "flex items-center gap-2.5 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+              isActive(item.href)
+                ? "bg-primary/15 text-foreground"
+                : "text-muted-foreground hover:bg-muted hover:text-foreground",
+            )}
+          >
+            <item.icon className="size-4" />
+            {item.label}
+          </Link>
+        ))}
       </nav>
       <div className="mt-auto border-t border-border p-2">
         <button
@@ -84,23 +84,30 @@ export default function AppSidebar({
 
   return (
     <div className="flex min-h-svh flex-1">
-      {/* Sidebar en desktop */}
-      <aside className="sticky top-0 hidden h-svh w-60 shrink-0 flex-col border-r border-border bg-sidebar md:flex">
-        {nav}
+      {/* Desktop: sidebar lateral */}
+      <aside className="no-print sticky top-0 hidden h-svh w-60 shrink-0 flex-col border-r border-border bg-sidebar md:flex">
+        {sidebarNav}
       </aside>
 
-      {/* Barra superior en móvil */}
-      <div className="no-print fixed inset-x-0 top-0 z-40 flex items-center gap-1 overflow-x-auto border-b border-border bg-sidebar px-2 py-2 md:hidden">
-        {NAV_ITEMS.map((item) => {
-          const active =
-            pathname === item.href || pathname.startsWith(`${item.href}/`);
-          return (
+      {/* Móvil + desktop: la página vive en una columna */}
+      <div className="flex min-w-0 flex-1 flex-col">
+        {/* Móvil: topbar sticky DENTRO del flujo — nunca encima del contenido */}
+        <header className="no-print sticky top-0 z-30 flex items-center gap-1 overflow-x-auto border-b border-border bg-sidebar px-2 py-2 md:hidden">
+          <Link
+            href="/activos"
+            className="flex shrink-0 items-center rounded-md bg-primary px-2 py-1 font-mono text-xs font-bold text-primary-foreground"
+            aria-label="Inicio"
+          >
+            CD
+          </Link>
+          {NAV_ITEMS.map((item) => (
             <Link
               key={item.href}
               href={item.href}
+              aria-current={isActive(item.href) ? "page" : undefined}
               className={cn(
                 "flex shrink-0 items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium",
-                active
+                isActive(item.href)
                   ? "bg-primary/15 text-foreground"
                   : "text-muted-foreground",
               )}
@@ -108,20 +115,20 @@ export default function AppSidebar({
               <item.icon className="size-4" />
               {item.label}
             </Link>
-          );
-        })}
-        <button
-          type="button"
-          onClick={onSignOut}
-          className="ml-auto shrink-0 rounded-md p-2 text-muted-foreground"
-          aria-label="Cerrar sesión"
-        >
-          <LogOut className="size-4" />
-        </button>
-      </div>
+          ))}
+          <button
+            type="button"
+            onClick={onSignOut}
+            className="ml-auto shrink-0 rounded-md p-2 text-muted-foreground"
+            aria-label="Cerrar sesión"
+          >
+            <LogOut className="size-4" />
+          </button>
+        </header>
 
-      <div className="flex min-w-0 flex-1 flex-col px-4 pt-14 pb-10 md:px-8 md:pt-8">
-        {children}
+        <div className="flex flex-1 flex-col px-4 py-6 md:px-8 md:py-8">
+          {children}
+        </div>
       </div>
     </div>
   );

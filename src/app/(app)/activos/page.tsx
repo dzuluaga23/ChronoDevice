@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Plus, Search } from "lucide-react";import { Button } from "@/components/ui/button";
+import { Plus, QrCode, Search } from "lucide-react";import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -132,6 +132,9 @@ export default async function ActivosPage({
                 <TableHead className="hidden text-right sm:table-cell">
                   Precio compra
                 </TableHead>
+                <TableHead className="text-center font-mono text-xs">
+                  QR
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -162,6 +165,16 @@ export default async function ActivosPage({
                   </TableCell>
                   <TableCell className="hidden text-right font-mono text-xs sm:table-cell">
                     {formatMoney(a.purchasePrice as string | null)}
+                  </TableCell>
+                  <TableCell className="w-12 text-center">
+                    <Link
+                      href={`/activos/${a.id}/qr`}
+                      className="relative z-20 inline-flex rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                      aria-label={`Etiqueta QR de ${a.name}`}
+                      title="Etiqueta QR"
+                    >
+                      <QrCode className="size-4" />
+                    </Link>
                   </TableCell>
                 </TableRow>
               ))}

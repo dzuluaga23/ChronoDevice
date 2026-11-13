@@ -65,10 +65,11 @@ export default async function DetalleActivoPage({
             {asset.name}
           </h1>
         </div>
-        <Button asChild variant="outline" size="sm" className="hidden sm:inline-flex">
+        <Button asChild variant="outline" size="sm">
           <Link href={`/activos/${asset.id}/qr`}>
             <QrCode data-icon="inline-start" />
-            Etiqueta QR
+            <span className="hidden sm:inline">Etiqueta QR</span>
+            <span className="sm:hidden">QR</span>
           </Link>
         </Button>
         <Button asChild variant="outline">
