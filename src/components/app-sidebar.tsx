@@ -15,11 +15,11 @@ interface AppSidebarProps {
 }
 
 const NAV_ITEMS = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/activos", label: "Activos", icon: Boxes },
-  { href: "/mantenimientos", label: "Próximos", icon: CalendarClock },
+  { href: "/dashboard", label: "Resumen", icon: LayoutDashboard },
+  { href: "/activos", label: "Inventario", icon: Boxes },
+  { href: "/mantenimientos", label: "Agenda", icon: CalendarClock },
   { href: "/alertas", label: "Alertas", icon: BellRing },
-  { href: "/escanear", label: "Escanear", icon: QrCode },
+  { href: "/escanear", label: "Escanear QR", icon: QrCode },
   { href: "/catalogos", label: "Catálogos", icon: Settings2 },
 ];
 
@@ -102,14 +102,14 @@ export default function AppSidebar({
   return (
     <div className="flex min-h-svh flex-1">
       {/* Desktop: sidebar lateral */}
-      <aside className="no-print sticky top-0 hidden h-svh w-60 shrink-0 flex-col border-r border-border bg-sidebar md:flex">
+      <aside className="no-print sticky top-0 hidden h-svh w-60 shrink-0 flex-col border-r border-border bg-sidebar sm:flex">
         {sidebarNav}
       </aside>
 
       {/* Móvil + desktop: la página vive en una columna */}
       <div className="flex min-w-0 flex-1 flex-col">
         {/* Móvil: topbar sticky DENTRO del flujo — nunca encima del contenido */}
-        <header className="no-print sticky top-0 z-30 flex items-center gap-1 overflow-x-auto border-b border-border bg-sidebar px-2 py-2 md:hidden">
+        <header className="no-print sticky top-0 z-30 flex items-center gap-1 overflow-x-auto border-b border-border bg-sidebar px-2 py-2 sm:hidden">
           <Link
             href="/activos"
             className="flex shrink-0 items-center rounded-md bg-primary px-2 py-1 font-mono text-xs font-bold text-primary-foreground"

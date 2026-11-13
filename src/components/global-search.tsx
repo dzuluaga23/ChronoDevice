@@ -86,7 +86,7 @@ export default function GlobalSearch() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="shrink-0 rounded-md p-2 text-muted-foreground md:hidden"
+        className="shrink-0 rounded-md p-2 text-muted-foreground sm:hidden"
         aria-label="Buscar activos (Ctrl+K)"
       >
         <Search className="size-4" />
